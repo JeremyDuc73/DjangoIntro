@@ -5,13 +5,55 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Messages </title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-4">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a style="font-size: larger" class="nav-link active border border-light me-4" href="{% url 'all_messages' %}">MESSAGES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="font-size: larger" class="nav-link" href="">?</a>
+                    </li>
 
-{% block content %}
+                    {% if request.user.is_authenticated %}
 
-{% endblock %}
+                        <li class="nav-item">
+                            <a style="font-size: larger" class="btn btn-secondary" href="{% url 'new_message' %}">AJOUTER UN MESSAGE</a>
+                        </li>
+
+                    {% else %}
+
+                        <li class="nav-item">
+                            <a style="font-size: larger" class="nav-link" href="{% url 'register' %}">S'INSCRIRE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: larger" class="nav-link" href="{% url 'login' %}">SE CONNECTER</a>
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+                {% if request.user.is_authenticated %}
+                    <h4 class="m-0 me-2 text-white">Bonjour {{ request.user.username }}</h4>
+                    <a style="font-size: larger" href="{% url 'logout' %}" class="btn btn-danger ">SE DECONNECTER </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
 
 </body>
 </html>

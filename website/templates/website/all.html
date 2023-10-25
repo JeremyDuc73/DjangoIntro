@@ -1,27 +1,17 @@
 {% extends 'website/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-
-
-
-<h1>Voici les messages</h1>
+    <h1 class="mt-4">Voici les messages</h1>
 
 {% for message in messages %}
-<p>----------</p>
-    <p>{{ message.title }}</p>
-   <p>{{ message.content }}</p>
-<a href="{% url 'show_message' message.id %}">voir</a>
-
-<p>----------------</p>
-
+    <div class="border border-dark p-4 mt-3">
+    <h4>{{ message.title }} <span class="badge bg-secondary">{{ message.category.name }}</span></h4>
+    <p>{{ message.content }}</p>
+    <a class="btn btn-primary" href="{% url 'show_message' message.id %}">VOIR</a>
+    </div>
 {% endfor %}
-
-<h2>Ajouter un message</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">VALIDER</button>
-</form>
 
 {% endblock %}
